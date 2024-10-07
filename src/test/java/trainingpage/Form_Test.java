@@ -51,7 +51,7 @@ public class Form_Test {
         logger.trace("Invoke of the formTest method");
         String name = "фыв";
         String email = "asdf@sdfg.rt";
-        List<WebElement> inputFields = webDriver.findElements(inputFieldsSelector); // Сразу нахожу оба инпут поля, чтобы лишний раз не использовать findElement(), т.к. это дорогостоящая операция с т.з. скорости
+        List<WebElement> inputFields = webDriver.findElements(inputFieldsSelector); // Сразу нахожу оба инпут-поля, чтобы лишний раз не использовать findElement(), т.к. это дорогостоящая операция с т.з. скорости
         inputFields.get(0).sendKeys(name);
         inputFields.get(1).sendKeys(email);
         webDriver.findElement(submitButtonSelector).click();

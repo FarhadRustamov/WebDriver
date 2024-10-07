@@ -1,5 +1,6 @@
 package factories;
 
+import data.Browser;
 import exceptions.BrowserNotFoundException;
 import implementation.FullScreenSetting;
 import implementation.HeadlessSetting;
@@ -21,8 +22,8 @@ public class WebDriverFactory {
     public WebDriver getDriver(Mode mode) {
         logger.trace("Invoke of the getDriver method");
         WebDriver webDriver = null;
-        switch (browserName) {
-            case "chrome": {
+        switch (Browser.valueOf(browserName.toUpperCase())) {
+            case CHROME: {
                 switch (mode) {
                     case HEADLESS:
                         webDriver = new ChromeDriver(new HeadlessSetting().setUpChrome());
@@ -36,7 +37,7 @@ public class WebDriverFactory {
                 }
             }
             break;
-            case "edge": {
+            case EDGE: {
                 switch (mode) {
                     case HEADLESS:
                         webDriver = new EdgeDriver(new HeadlessSetting().setUpEdge());
@@ -50,7 +51,7 @@ public class WebDriverFactory {
                 }
             }
             break;
-            case "firefox": {
+            case FIREFOX: {
                 switch (mode) {
                     case HEADLESS:
                         webDriver = new FirefoxDriver(new HeadlessSetting().setUpFireFox());

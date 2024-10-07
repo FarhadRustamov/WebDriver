@@ -1,5 +1,6 @@
 package factories;
 
+import data.Browser;
 import exceptions.BrowserNotFoundException;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
@@ -13,16 +14,16 @@ public class WebDriverManagerFactory {
 
     public void getWebDriverManager() {
         logger.trace("Invoke of the getWebDriverManager method");
-        switch (browserName) {
-            case "chrome": {
+        switch (Browser.valueOf(browserName.toUpperCase())) {
+            case CHROME: {
                 WebDriverManager.chromedriver().setup();
                 break;
             }
-            case "edge": {
+            case EDGE: {
                 WebDriverManager.edgedriver().setup();
                 break;
             }
-            case "firefox": {
+            case FIREFOX: {
                 WebDriverManager.firefoxdriver().setup();
                 break;
             }
