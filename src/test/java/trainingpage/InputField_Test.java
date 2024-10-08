@@ -2,7 +2,7 @@ package trainingpage;
 
 import factories.WebDriverFactory;
 import factories.WebDriverManagerFactory;
-import data.Mode;
+import enums.Mode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;

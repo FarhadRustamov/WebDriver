@@ -10,16 +10,13 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 public class HeadlessSetting implements WebDriverSetting {
 
     private final Logger logger = LogManager.getLogger(HeadlessSetting.class);
-
-    private String setArgument() {
-        return "--headless";
-    }
+    private final String argument = "--headless";
 
     @Override
     public ChromeOptions setUpChrome() {
         logger.trace("Invoke of the setUpChrome method");
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments(setArgument());
+        chromeOptions.addArguments(argument);
         logger.trace("Exiting the setUpChrome method");
         return chromeOptions;
     }
@@ -28,7 +25,7 @@ public class HeadlessSetting implements WebDriverSetting {
     public EdgeOptions setUpEdge() {
         logger.trace("Invoke of the setUpEdge method");
         EdgeOptions edgeOptions = new EdgeOptions();
-        edgeOptions.addArguments(setArgument());
+        edgeOptions.addArguments(argument);
         logger.trace("Exiting the setUpEdge method");
         return edgeOptions;
     }
@@ -37,7 +34,7 @@ public class HeadlessSetting implements WebDriverSetting {
     public FirefoxOptions setUpFireFox() {
         logger.trace("Invoke of the setUpFireFox method");
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.addArguments(setArgument());
+        firefoxOptions.addArguments(argument);
         logger.trace("Exiting the setUpFireFox method");
         return firefoxOptions;
     }

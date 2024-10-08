@@ -1,11 +1,11 @@
 package factories;
 
-import data.Browser;
+import enums.Browser;
 import exceptions.BrowserNotFoundException;
 import implementation.FullScreenSetting;
 import implementation.HeadlessSetting;
 import implementation.MaximizedSetting;
-import data.Mode;
+import enums.Mode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;

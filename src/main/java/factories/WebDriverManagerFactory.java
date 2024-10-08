@@ -1,6 +1,6 @@
 package factories;
 
-import data.Browser;
+import enums.Browser;
 import exceptions.BrowserNotFoundException;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
