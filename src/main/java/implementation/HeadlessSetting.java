@@ -1,41 +1,40 @@
 package implementation;
 
+import enums.Browser;
+import exceptions.ModeNotConfiguredException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.AbstractDriverOptions;
 
 
 public class HeadlessSetting implements WebDriverSetting {
 
+    private final String browserName = System.getProperty("browser");
     private final Logger logger = LogManager.getLogger(HeadlessSetting.class);
-    private final String argument = "--headless";
 
     @Override
-    public ChromeOptions setUpChrome() {
-        logger.trace("Invoke of the setUpChrome method");
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments(argument);
-        logger.trace("Exiting the setUpChrome method");
-        return chromeOptions;
-    }
-
-    @Override
-    public EdgeOptions setUpEdge() {
-        logger.trace("Invoke of the setUpEdge method");
-        EdgeOptions edgeOptions = new EdgeOptions();
-        edgeOptions.addArguments(argument);
-        logger.trace("Exiting the setUpEdge method");
-        return edgeOptions;
-    }
-
-    @Override
-    public FirefoxOptions setUpFireFox() {
-        logger.trace("Invoke of the setUpFireFox method");
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.addArguments(argument);
-        logger.trace("Exiting the setUpFireFox method");
-        return firefoxOptions;
+    public AbstractDriverOptions configureMode() {
+        logger.trace("Invoke of the configureMode method");
+        AbstractDriverOptions options;
+        String argument = "--headless";
+        switch (Browser.valueOf(browserName.toUpperCase())) {
+            case CHROME:
+                options = new ChromeOptions().addArguments(argument);
+                break;
+            case EDGE:
+                options = new EdgeOptions().addArguments(argument);
+                break;
+            case FIREFOX:
+                options = new FirefoxOptions().addArguments(argument);
+                break;
+            default:
+                logger.trace("Exiting the configureMode method");
+                throw new ModeNotConfiguredException();
+        }
+        logger.trace("Exiting the configureMode method");
+        return options;
     }
 }

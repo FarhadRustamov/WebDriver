@@ -2,6 +2,7 @@ package factories;
 
 import enums.Browser;
 import exceptions.BrowserNotFoundException;
+import exceptions.ModeNotSetException;
 import implementation.FullScreenSetting;
 import implementation.HeadlessSetting;
 import implementation.MaximizedSetting;
@@ -10,8 +11,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.AbstractDriverOptions;
 
 
 public class WebDriverFactory {
@@ -21,55 +26,43 @@ public class WebDriverFactory {
 
     public WebDriver getDriver(Mode mode) {
         logger.trace("Invoke of the getDriver method");
-        WebDriver webDriver = null;
+        WebDriver webDriver;
         switch (Browser.valueOf(browserName.toUpperCase())) {
-            case CHROME: {
-                switch (mode) {
-                    case HEADLESS:
-                        webDriver = new ChromeDriver(new HeadlessSetting().setUpChrome());
-                        break;
-                    case FULL_SCREEN:
-                        webDriver = new ChromeDriver(new FullScreenSetting().setUpChrome());
-                        break;
-                    case MAXIMIZED:
-                        webDriver = new ChromeDriver(new MaximizedSetting().setUpChrome());
-                        break;
-                }
-            }
-            break;
-            case EDGE: {
-                switch (mode) {
-                    case HEADLESS:
-                        webDriver = new EdgeDriver(new HeadlessSetting().setUpEdge());
-                        break;
-                    case FULL_SCREEN:
-                        webDriver = new EdgeDriver(new FullScreenSetting().setUpEdge());
-                        break;
-                    case MAXIMIZED:
-                        webDriver = new EdgeDriver(new MaximizedSetting().setUpEdge());
-                        break;
-                }
-            }
-            break;
-            case FIREFOX: {
-                switch (mode) {
-                    case HEADLESS:
-                        webDriver = new FirefoxDriver(new HeadlessSetting().setUpFireFox());
-                        break;
-                    case FULL_SCREEN:
-                        webDriver = new FirefoxDriver(new FullScreenSetting().setUpFireFox());
-                        break;
-                    case MAXIMIZED:
-                        webDriver = new FirefoxDriver(new MaximizedSetting().setUpFireFox());
-                        break;
-                }
-            }
-            break;
+            case CHROME:
+                webDriver = new ChromeDriver((ChromeOptions) setModeForBrowser(mode));
+                break;
+            case EDGE:
+                webDriver = new EdgeDriver((EdgeOptions) setModeForBrowser(mode));
+                break;
+            case FIREFOX:
+                webDriver = new FirefoxDriver((FirefoxOptions) setModeForBrowser(mode));
+                break;
             default:
                 logger.trace("Exiting the getDriver method");
                 throw new BrowserNotFoundException(browserName);
         }
         logger.trace("Exiting the getDriver method");
         return webDriver;
+    }
+
+    private AbstractDriverOptions setModeForBrowser(Mode mode) {
+        logger.trace("Invoke of the setModeForBrowser method");
+        AbstractDriverOptions options;
+        switch (mode) {
+            case HEADLESS:
+                options = new HeadlessSetting().configureMode();
+                break;
+            case MAXIMIZED:
+                options = new MaximizedSetting().configureMode();
+                break;
+            case FULL_SCREEN:
+                options = new FullScreenSetting().configureMode();
+                break;
+            default:
+                logger.trace("Exiting the setModeForBrowser method");
+                throw new ModeNotSetException(mode);
+        }
+        logger.trace("Exiting the setModeForBrowser method");
+        return options;
     }
 }
