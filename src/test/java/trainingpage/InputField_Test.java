@@ -48,7 +48,7 @@ public class InputField_Test {
         String expectedResult = "ОТУС";
         WebElement inputField = webDriver.findElement(inputFieldSelector);
         inputField.sendKeys(expectedResult);
-        Assertions.assertEquals(expectedResult, inputField.getAttribute("value"));
         logger.trace("Exiting the inputFieldTest method");
+        Assertions.assertEquals(expectedResult, inputField.getAttribute("value"));
     }
 }

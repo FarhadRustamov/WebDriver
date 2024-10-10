@@ -9,6 +9,11 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 
 public class ModalWindow_Test {
@@ -46,10 +51,12 @@ public class ModalWindow_Test {
     @Test
     void modalWindowTest() {
         logger.trace("Invoke of the modalWindowTest method");
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(modalWindowTitleSelector));
         webDriver.findElement(buttonSelector).click();
-        WebElement modalWindowTitle = webDriver.findElement(modalWindowTitleSelector);
+        WebElement modalWindowTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(modalWindowTitleSelector));
         String actualText = modalWindowTitle.getText();
-        Assertions.assertEquals("Это модальное окно", actualText);
         logger.trace("Exiting the modalWindowTest method");
+        Assertions.assertEquals("Это модальное окно", actualText);
     }
 }

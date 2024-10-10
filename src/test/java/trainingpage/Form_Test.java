@@ -56,7 +56,7 @@ public class Form_Test {
         inputFields.get(1).sendKeys(email);
         webDriver.findElement(submitButtonSelector).click();
         WebElement message = webDriver.findElement(messageSelector);
-        Assertions.assertEquals(String.format("Форма отправлена с именем: %s и email: %s", name, email), message.getText());
         logger.trace("Exiting the formTest method");
+        Assertions.assertEquals(String.format("Форма отправлена с именем: %s и email: %s", name, email), message.getText());
     }
 }
