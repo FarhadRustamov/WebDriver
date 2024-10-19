@@ -50,11 +50,13 @@ public class ModalWindow_Test {
     @Test
     void modalWindowTest() {
         logger.trace("Invoke of the modalWindowTest method");
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(modalWindowTitleSelector));
+        WebElement modalWindowTitleElement = webDriver.findElement(modalWindowTitleSelector);
+        Assertions.assertFalse(modalWindowTitleElement.isDisplayed(), "Элемент виден, а не должен");
         webDriver.findElement(buttonSelector).click();
-        WebElement modalWindowTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(modalWindowTitleSelector));
-        String actualText = modalWindowTitle.getText();
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(modalWindowTitleSelector));
+        Assertions.assertTrue(modalWindowTitleElement.isDisplayed(), "Элемент не виден");
+        String actualText = modalWindowTitleElement.getText();
         logger.trace("Exiting the modalWindowTest method");
         Assertions.assertEquals("Это модальное окно", actualText);
     }
